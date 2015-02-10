@@ -7,6 +7,7 @@ public class TicTacToe {
 	boolean xTurn;
 	boolean oTurn;
 	boolean computerFirst;
+	boolean flag = false;
 
 	Random rand = new Random();
 	Scanner scan = new Scanner(System.in);
@@ -14,11 +15,19 @@ public class TicTacToe {
 	public void main() {
 		resetBoard();
 		chooseFirst();
-		if (!finalWinCheck()) {
-			chooser();
+		while (!finalWinCheck()) {
+		    if (finalWinCheck())
+            {
+                return;
+            }
+		    chooser();
 			printBoard();
 		}
-		
+		System.out.println("Want to play again? yes/no");
+        String answer = scan.next();
+        if (answer.equalsIgnoreCase("yes")) {
+            main();
+        }
 	}
 	
 	public void printCheck() {
@@ -129,7 +138,7 @@ public class TicTacToe {
 				board[coord2 - 1][coord1 - 1] = "O";
 				mlgCheck = false;
 			} else {
-				System.out.print("Didn't find");
+				//System.out.print("Didn't find");
 			}
 		}
 	}
@@ -234,13 +243,7 @@ public class TicTacToe {
 	
 	public boolean finalWinCheck() {
 		if (this.xWinCheck() || this.oWinCheck()) {
-			System.out.println("Want to play again? yes/no");
-			String answer = scan.nextLine();
-			if (answer.equalsIgnoreCase("yes")) {
 				return true;
-			} else {
-				return false;
-			}
 		}
 		int placeAdd = 0;
 		for (int row = 0; row < 3; row++) {
@@ -252,14 +255,8 @@ public class TicTacToe {
 		}
 		if (placeAdd == 9) {
 			System.out.println("Tie!");
-			System.out.println("Want to play again? yes/no");
-			String answer = scan.nextLine();
-			if (answer.equalsIgnoreCase("yes")) {
 				return true;
-			} else {
-				return false;
 			}
-		}
 		return false;
 	}
 }
